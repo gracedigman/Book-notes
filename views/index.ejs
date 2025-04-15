@@ -1,0 +1,70 @@
+<%- include('partials/header') %>
+
+<main class="container">
+  <section class="search-section">
+    <form action="/search" method="GET" class="search-form">
+      <input 
+        type="text" 
+        name="q" 
+        placeholder="Search books by title or author..." 
+        value="<%= locals.searchQuery || '' %>"
+      >
+      <button type="submit">Search</button>
+    </form>
+  </section>
+
+  <section class="sort-controls">
+    <div class="sort-options">
+      <span>Sort by:</span>
+      <a href="/?sort=date_read&order=<%= currentSort === 'date_read' && currentOrder === 'DESC' ? 'ASC' : 'DESC' %>" 
+        class="<%= currentSort === 'date_read' ? 'active' : '' %>">Date Read</a>
+      <a href="/?sort=rating&order=<%= currentSort === 'rating' && currentOrder === 'DESC' ? 'ASC' : 'DESC' %>" 
+        class="<%= currentSort === 'rating' ? 'active' : '' %>">Rating</a>
+      <a href="/?sort=title&order=<%= currentSort === 'title' && currentOrder === 'ASC' ? 'DESC' : 'ASC' %>" 
+        class="<%= currentSort === 'title' ? 'active' : '' %>">Title</a>
+    </div>
+    <a href="/books/add" class="add-book-btn">Add New Book</a>
+  </section>
+
+  <% if (locals.error) { %>
+    <div class="error-message">
+      <%= error %>
+    </div>
+  <% } %>
+
+  <div class="books-grid">
+    <% if (books && books.length > 0) { %>
+      <% books.forEach(book => { %>
+        <div class="book-card">
+          <a href="/books/<%= book.id %>" class="book-link">
+            <div class="book-cover">
+              <% if (book.cover_url) { %>
+                <img src="<%= book.cover_url %>" alt="<%= book.title %> cover" onerror="this.src='/images/default-cover.jpg'">
+              <% } else { %>
+                <div class="no-cover">
+                  <span><%= book.title %></span>
+                  <span><%= book.author %></span>
+                </div>
+              <% } %>
+            </div>
+            <div class="book-info">
+              <h3><%= book.title %></h3>
+              <p class="author">by <%= book.author %></p>
+              <div class="book-meta">
+                <span class="rating">Rating: <%= book.rating %>/10</span>
+                <span class="date">Read: <%= new Date(book.date_read).toLocaleDateString() %></span>
+              </div>
+            </div>
+          </a>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <div class="no-books">
+        <h3>No books found</h3>
+        <p>Add some books to your collection to get started!</p>
+      </div>
+    <% } %>
+  </div>
+</main>
+
+<%- include('partials/footer') %>
