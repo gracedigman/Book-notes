@@ -11,9 +11,6 @@ A personal book notes tracking application inspired by Derek Sivers' book notes 
 - Search functionality to quickly find books
 - Responsive design for desktop and mobile devices
 
-## Screenshots
-
-(Add screenshots of your application here)
 
 ## Technologies Used
 
@@ -27,7 +24,7 @@ A personal book notes tracking application inspired by Derek Sivers' book notes 
 
 1. Clone the repository
 ```
-git clone https://github.com/yourusername/book-notes.git
+git clone https://github.com/gracedigman/Book-notes
 cd book-notes
 ```
 
